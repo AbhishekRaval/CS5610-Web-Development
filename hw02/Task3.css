@@ -1,0 +1,31 @@
+#loremipsem{
+    display:block;
+    width:100%;
+}
+
+h2{
+	text-align: center;
+}
+
+td a { 
+   display: block; 
+   border: 1px solid black;
+   padding: 16px; 
+}
+
+#righttable{
+float: right;
+width: 66%;
+visibility: hidden;
+}
+
+#loremtext, #thirdthing, #bottlestxt{
+	visibility: hidden;
+}
+
+
+
+#lefttable{
+float: left;
+width: 33%;
+}

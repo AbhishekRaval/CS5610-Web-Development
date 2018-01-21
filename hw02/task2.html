@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Task 2</title>
+</head>
+<body>
+	<h2 id="demo">10</h2>
+	<button name="alertbtn" onclick="alertwithnum()">Alert Button</button>
+	<button name="incrementbtn" onclick="incnum()">Increment Number</button>
+	<button name="alertbtn" onclick="appendbottom()">Append Paragraph</button>
+
+	<script type="text/javascript">
+		var i=0;
+		function alertwithnum(){
+			var element = document.getElementsByTagName("h2");
+			alert(element[element.length-1].innerHTML);			
+		}
+			
+
+		function incnum(){
+			var element = document.getElementsByTagName("h2");
+		
+			for (var k= 0; k <element.length; k++) {
+				var num = Number(element[k].innerHTML) + 1;
+				element[k].innerHTML = num;
+			}
+
+		}
+
+		function appendbottom(){
+			var x = document.getElementsByTagName("h2");
+			var num = Number(x[i].innerHTML) + 1;
+			var new_h2 = document.createElement("h2");
+			i++;
+			new_h2.innerText = num;
+			var body = document.children[0].children[1];
+			body.insertBefore(new_h2,x[i]);
+		}
+
+
+	</script>
+</body>
+</html>
