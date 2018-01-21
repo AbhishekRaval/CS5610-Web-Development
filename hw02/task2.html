@@ -13,24 +13,21 @@
 	<script>
 		var i=0;
 		function alertwithnum(){
-			var element = document.getElementsByTagName("h2");
-			alert(element[element.length-1].innerHTML);			
+			var element = document.getElementById('demo');
+			alert(element.innerHTML);			
 		}
 			
 
 		function incnum(){
-			var element = document.getElementsByTagName("h2");
-		
-			for (var k= 0; k <element.length; k++) {
-				var num = Number(element[k].innerHTML) + 1;
-				element[k].innerHTML = num;
-			}
-
+			var element = document.getElementById('demo');
+			var num = Number(element.innerHTML) + 1;
+			element.innerHTML = num;
+			
 		}
 
 		function appendbottom(){
 			var x = document.getElementsByTagName("h2");
-			var num = Number(x[i].innerHTML) + 1;
+			var num = Number(x[0].innerHTML);
 			var new_h2 = document.createElement("h2");
 			i++;
 			new_h2.innerText = num;
