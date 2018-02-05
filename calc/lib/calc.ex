@@ -150,16 +150,16 @@ defmodule Calc do
   				end
   			end
 
-  			def parenthesisStack(stack, final_string) do
-  				peek = Enum.at(stack, length(stack) - 1)
-  				case peek do
-  					"(" -> 
-  						{Enum.slice(stack, 0, length(stack) - 1), final_string}
-  					_ -> 
-  						parenthesisStack(Enum.slice(stack, 0, length(stack)-1), 
-  						final_string ++ [peek])
-  				end
-  			end
+	def parenthesisStack(stack, final_string) do
+		peek = Enum.at(stack, length(stack) - 1)
+		case peek do
+			"(" -> 
+				{Enum.slice(stack, 0, length(stack) - 1), final_string}
+			_ -> 
+				parenthesisStack(Enum.slice(stack, 0, length(stack)-1), 
+				final_string ++ [peek])
+		end
+	end
 
 	#helper for StringToListFormat
 	def checkparanthesis?(first) do
@@ -169,26 +169,26 @@ defmodule Calc do
 	#Construct the List of operand, operators and paranthesis from raw list of 
 	#characters
 	def stringToListFormat(string_list, string_buffer, output_string) do
-		if string_list == [] do
-			case string_buffer do
-				"" -> output_string
-				_ -> output_string ++ [string_buffer]
-			end
-		else
-			[first | rest] = string_list
-			op? = Map.has_key?(@precedence_rule, first)
-			cond do
-				(op? || checkparanthesis?(first)) && string_buffer == "" ->
-					stringToListFormat(rest, "", output_string ++ [first])
+	if string_list == [] do
+		case string_buffer do
+			"" -> output_string
+			_ -> output_string ++ [string_buffer]
+		end
+	else
+		[first | rest] = string_list
+		op? = Map.has_key?(@precedence_rule, first)
+		cond do
+			(op? || checkparanthesis?(first)) && string_buffer == "" ->
+				stringToListFormat(rest, "", output_string ++ [first])
 
-					(op? || checkparanthesis?(first)) ->
-						stringToListFormat(rest, "",
-							output_string ++ [string_buffer, first])
+				(op? || checkparanthesis?(first)) ->
+					stringToListFormat(rest, "",
+						output_string ++ [string_buffer, first])
 
-						true ->
-							stringToListFormat(rest,
-								string_buffer <> first, output_string)
-						end
+					true ->
+						stringToListFormat(rest,
+							string_buffer <> first, output_string)
 					end
 				end
 			end
+		end
