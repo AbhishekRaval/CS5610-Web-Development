@@ -23,6 +23,7 @@ defmodule Calc do
   #described as follows:
   #1.Splitting String, on the basis of Nextline check
   #2.Conversion from Infix String to Postfix String Using Shunting Yard Algo.
+  #Attribution : https://brilliant.org/wiki/shunting-yard-algorithm/
   #3.Enum.map returns a singleton list, thus extracting first returns Postfix
   #	 String.
   #4.All the elements of postfix string are separated by space element thus 
@@ -96,6 +97,7 @@ defmodule Calc do
   #of operators,operands and paranthesis
   #4.It will pass the formated string to intopost function with empty stack, 
   #and finalString
+  #Attribution: https://www.youtube.com/watch?v=vq-nUF0G4fI&t=922s
   def intopost(arithexpress) do 
   	arithexpress
   	|>String.split("")
@@ -121,33 +123,33 @@ defmodule Calc do
   					true -> 
   						intopost(rest, pushOperator(stack, first, final_string))
   					end
-  				else
-  					cond do
-  						first == ")" ->
-  							intopost(rest, parenthesisStack(stack,final_string))
-  							true ->
-  								intopost(rest, {stack, final_string ++ [first]})
-  							end
-  						end
-  					end
+		else
+			cond do
+				first == ")" ->
+					intopost(rest, parenthesisStack(stack,final_string))
+					true ->
+						intopost(rest, {stack, final_string ++ [first]})
+					end
+				end
+			end
 
-  	#It will get a stack, operator and final_String, if the stack is empty, it
-  	#will return final_string appended with, operator, else
-  	#it will append the operator to the final string if operator precedence of
-  	#operator on head is less than op!
-  	def pushOperator(stack, op, final_string) do
-  		if stack == [] do
-  			{[op], final_string}
-  		else
-  			peek = Enum.at(stack, length(stack) - 1)
-  			cond do
-  				@precedence_rule[op] > @precedence_rule[peek] -> 
-  					{stack ++ [op], final_string}
-  					true -> 
-  						pushOperator(Enum.slice(stack, 0, length(stack) - 1), 
-  							op, final_string ++ [peek])
-  					end
-  				end
+	#It will get a stack, operator and final_String, if the stack is empty, it
+	#will return final_string appended with, operator, else
+	#it will append the operator to the final string if operator precedence of
+	#operator on head is less than op!
+	def pushOperator(stack, op, final_string) do
+		if stack == [] do
+			{[op], final_string}
+		else
+			peek = Enum.at(stack, length(stack) - 1)
+			cond do
+				@precedence_rule[op] > @precedence_rule[peek] -> 
+					{stack ++ [op], final_string}
+					true -> 
+						pushOperator(Enum.slice(stack, 0, length(stack) - 1), 
+							op, final_string ++ [peek])
+					end
+				end
   			end
 
 	def parenthesisStack(stack, final_string) do
