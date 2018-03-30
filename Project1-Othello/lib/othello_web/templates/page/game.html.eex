@@ -1,0 +1,42 @@
+ <body style="background-image: url(<%= static_path(@conn, "/images/background.jpg")%>);
+ background-repeat: no-repeat;
+ background-attachment: fixed;
+ background-size: cover;
+ position: relative;">
+ <div class="container">
+ 	<section class="h-100">
+ 		<header class="container h-100">
+ 			<table class="gameboard table text-center" id="headgame" style="  border-color: #968e8e;
+ 			border-style: solid;
+ 			border-width: 0px 0px 4px 0px; " >
+ 			<thead>
+ 				<tr>
+ 					<th scope="col" class="text-white" style="text-transform: capitalize;"><h3> Welcome, <%= @player_name %>  to <% @game_name %>'s Lobby</h3></th>
+ 				</tr>
+ 			</thead>
+ 		</table>
+ 		<div class="d-flex align-items-center justify-content-center h-100 ">
+ 			<!-- source: https://stackoverflow.com/a/46298729 || code for centering a page -->
+ 			<div id="gameboard">
+
+				<script>
+        if ("<%= @options %>" == "false") {
+          window.gameName = "<%= @game_name %>"+"rdxtgfcj8gkllktjHf46gdx7gs@hdvhy6hdbbvb"
+        }
+        else{
+          window.gameName = "<%= @game_name %>"
+        }
+
+					window.playerName = "<%= @player_name %>"
+					window.twoPlayer = ("<%= @options %>" == "true")
+				</script>
+ 				<div id="game" >
+ 					Loading React Code ...
+ 				</div>
+ 			</div>
+
+ 		</div>
+ 	</header>
+ </section>
+</div> <!-- /container -->
+</body>

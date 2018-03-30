@@ -1,0 +1,185 @@
+ <body style="background-image: url(<%= static_path(@conn, "/images/background.jpg") %>);
+ 	background-repeat: no-repeat;
+    background-attachment: fixed;
+  	background-size: cover;
+	width: 100%;
+	height: 100vh;
+	background-position: center center;
+	position: relative;">
+ <div class="container">
+<section class="h-100">
+	<header class="container h-100">
+		<table class="table text-center" style="  border-color: #968e8e;
+ 			border-style: solid;
+ 			border-width: 0px 0px 4px 0px; ">
+			<thead>
+				<tr>
+ 					<th scope="col" class="text-white"><h3> Welcome to Othello Game</h3></th>
+ 				</tr>
+			</thead>
+		</table>
+		<div class="d-flex align-items-center justify-content-center h-100 py-5">
+			<div class="d-flex flex-column mx-auto">
+				<!-- source: https://stackoverflow.com/a/46298729 || code for centering a page -->
+				<div class="py-5">
+					<%= form_tag("/game", method: :post)do %>
+				      <!-- Attribution: https://github.com/NatTuck/microblog/blob/part-two/lib/microblog_web/templates/layout/app.html.eex -->
+				    <div class="row">
+					    <p class="mr-2 text-white h6 form-group">Enter Game Name:</p>
+						<input type="text"  class="form-control" id="game-name" name="gamename" placeholder="Your Game Name">
+					</div>
+
+					<div class="row">
+						<p class="mr-2 mt-3 text-white h6 form-group">Enter Your Name:</p>
+						<input type="text" id="player-name" name="playername" class="form-control" placeholder="Your Name">
+					</div>
+
+					<div class="text-center text-white mt-2">
+					  <label class="pr-4">
+					    <input type="radio" class="option-input radio" name="options" value="false"  />
+					    Single Player
+					  </label>
+					  <label>
+					    <input type="radio" class="option-input radio" value="true" name="options" checked/>
+					    Two Player
+					  </label>
+					</div>
+				    <p class="text-center mt-3"><Button class="btn btn-primary" id="game-button">Join Game</Button></p>
+
+				    <p class="text-center mt-4 text-white">
+				    <ul>
+				    <li class="text-white">	
+				    For a Multiplayer Game, Ask your friends to Join with same Game Name. </li>
+					<li class="text-white">  You should use separate Player Name, But same Game Name. </li>
+					<li class="text-white"> Scroll Below to learn Game rules.</li>
+					</ul>
+					</p>
+				    <% end %>
+				  </div>
+				</div>
+			</div>
+		</div>
+
+		<div class="d-flex align-items-center justify-content-center h-100">
+			<div class="d-flex flex-column mx-auto">
+				<!-- source: https://stackoverflow.com/a/46298729 || code for centering a page -->
+				<div>
+					<div class="row">
+					<div class="card text-white"  style="width:75%; margin-left: auto; margin-right: auto;
+					display:block; background-color: transparent;  border-width: 0;">
+					<div class="card-header">
+						<!-- Source: http://www.boardgamecapital.com/game_rules/othello.pdf -->
+						Learn Othello Game
+					</div>
+					<div class="card-body">
+						<p class="card-text">
+							<ul>
+								<li>
+									Each player takes 32 disks and chooses one color to use throughout the game.
+									Game begins with two black disks and two white disks as shown in Figure 1.
+								</li>
+								<img src="<%= static_path(@conn, "/images/figure1.jpg") %>" height = "25%" width = "25%">
+								<li>
+									<p>A move consists of "outflanking" your opponent’s disk(s), then flipping the outflanked disk(s) to your color.</p>
+									<p>To "outflank" means to place a disk on the board so that your opponent’s row (or rows) of disks is bordered at each end by a disk of your color. A row may be made up of one or more disks.Here’s one example: White disk A was already in place on the board. The placement of white disk B outflanks the row of three black disks.</p>
+								</li>
+								<img src="<%= static_path(@conn, "/images/descrule1.jpg") %>" height = "25%" width = "25%">
+								<li>White flips the outflanked disks and the row now looks like this: </li>
+								<img src="<%= static_path(@conn, "/images/descrule2.jpg") %>" height = "25%" width = "25%">
+							</ul>
+						</p>
+						<h5 class="card-title">Othello Game Rules</h5>
+						<p class="card-text">
+							<ol>
+								<li>White always moves first.</li>
+								<li>If a player cannot outflank and flip at least one opposing disk, they forfeit their turn and their opponent moves again. However, if a move is available a player may not forfeit their turn.</li>
+								<li>A disk may outflank any number of disks in one or more rows in any number of directions at the same time--horizontally, vertically or diagonally. A "row" is defined as one or more disks in a continuous straight line. (See Figures 2 and 3).</li>
+								<img src="<%= static_path(@conn, "/images/figure2.jpg") %>" height = "25%" width = "25%">
+								<img src="<%= static_path(@conn, "/images/figure3.jpg") %>" height = "25%" width = "25%">
+								<li>Players may not skip over their own color disk(s) to outflank an opposing disk. (See Figure 4.)</li>
+								<img src="<%= static_path(@conn, "/images/figure4.jpg") %>" height = "25%" width = "25%">
+								<li>Disk(s) may only be outflanked as a direct result of a move and must fall in the direct line of the disk placed down. (See Figure 5 and 6.)</li>
+								<img src="<%= static_path(@conn, "/images/figure5.jpg") %>" height = "25%" width = "25%">
+								<img src="<%= static_path(@conn, "/images/figure6.jpg") %>" height = "25%" width = "25%">
+								<li>All disks outflanked in any one movemust be flipped, even if it is to the player’s advantage not to flip them at all.</li>
+								<li>A player who flips a disk that should not have been turned may correct the mistake as long as the opponent has not made a subsequent move. If the opponent has already moved, it is too late for a change and the disk(s) remain as is.</li>
+								<li>Once a disk is placed on a square, it can never be moved to another square later in the game.</li>
+								<li>If a player runs out of disks, but still has the opportunity to outflank an opposing disk on their turn, the
+								opponent must give the player a disk to use. This can happen as many times as the player needs and can use a disk.</li>
+								<li>When it is no longer possible for either player to move, the game is over. Disks are counted and the player with the majority of their color showing is the winner.</li>
+							</ol>
+						</p>
+						<a href="#" class="btn btn-link">Go to top</a>
+					</div>
+				</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+</section>
+
+</div> <!-- /container -->
+</body>
+<style>
+/* source: https://codepen.io/wilder_taype/pen/pNXwMW*/
+*{font-family: 'Roboto', sans-serif;}
+.option-input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  position: relative;
+  top: 13.33333px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 40px;
+  width: 40px;
+  transition: all 0.15s ease-out 0s;
+  background: #cbd1d8;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  margin-right: 0.5rem;
+  outline: none;
+  position: relative;
+  z-index: 1000;
+}
+.option-input:hover {
+  background: #9faab7;
+}
+.option-input:checked {
+  background: #007bff;
+}
+.option-input:checked::before {
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  content: '✔';
+  display: inline-block;
+  font-size: 26.66667px;
+  text-align: center;
+  line-height: 40px;
+}
+.option-input:checked::after {
+  -webkit-animation: click-wave 0.65s;
+  -moz-animation: click-wave 0.65s;
+  animation: click-wave 0.65s;
+  background: blue;
+  content: '';
+  display: block;
+  position: relative;
+  z-index: 100;
+}
+.option-input.radio {
+  border-radius: 50%;
+}
+.option-input.radio::after {
+  border-radius: 50%;
+}
+
+
+</style>
