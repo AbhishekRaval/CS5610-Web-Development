@@ -1,0 +1,18 @@
+<div class="row">
+  <div class="col">
+    <h3> Welcome to Task Manager Website !</h3>    
+    <%= form_tag("/session", method: :post)do %>
+      <!-- Attribution: https://github.com/NatTuck/microblog/blob/part-two/lib/microblog_web/templates/layout/app.html.eex -->
+
+    <div class="form-group" style="margin-top: 3%">
+    	Email : 
+    	<input type="email" name="email" placeholder="user@example.com">    	
+    </div>
+
+    <div class="form-group" style="margin-top: 3%">
+    	<button class="btn btn-primary">Login</button>
+    	<%= link "Register", to: user_path(@conn, :new), class: "btn btn-info" %>	
+    </div>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+<div class="container">
+<h3> <%=  @current_user.name%>'s Dashboard </h3>
+<h5>Your Account Details:</h5>
+<ul>
+	<li><strong>Name: </strong><%=  @current_user.name%></li>
+	<li><strong>Email: </strong><%=  @current_user.email%></li>
+</ul>
+
+<div style="margin-bottom: 1%">
+<span><%= link "New Task", to: task_path(@conn, :new) , class: "btn btn-primary"%></span>
+</div>
+
+<%= Enum.map @tasks, fn task -> %>
+<div class= "row">
+	<div class="col">
+		<%= if @current_user.email === task.user.email do %>	
+		<div class="card">
+			<div class="card-body">
+				<h5 class="card-title"> Task: <%= task.name %></h5>
+					<p> Task Assigned to: <%= task.user.name %> </p>					
+					<p>Description: <%= task.description %> </p>
+					<p>Status: 
+					<%= if task.complete do %>
+					 Completed <span class="float-right">Time Spent: <%= task.timespent.hour*60 + task.timespent.minute %> minutes</span>
+					<%= else %>	
+					Incomplete!
+					<%= end %>
+					</p>
+					<span class="float-left">Task Assigned by:<strong><%= task.assigns.name %></strong> </span>
+					<span><%= link "Edit Task Details", to: task_path(@conn, :edit, task), class: "float-right" %></span>
+					<span  class= "float-right"> &nbsp;&nbsp;</span>
+					<span> <%= link "Delete Task", to: task_path(@conn, :delete, task), method: :delete, data: [confirm: "Are you sure?"], class: "float-right" %></span>				
+				</div>
+			</div>
+			<%= end %>
+		</div>
+	</div>
+	<% end %>
+	<div style="margin-top: 2%">
+		<span><%= link "Edit User Details", to: user_path(@conn, :edit,  @current_user), class:  "float-left" %></span>
+		<span><%= link "Delete User Details", to: user_path(@conn, :delete, @current_user), method: :delete, data: [confirm: "Are you sure?"], class:  "float-right" %></span>
+	</div>	
+</div>

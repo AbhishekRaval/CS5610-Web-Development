@@ -1,0 +1,32 @@
+<h2>Listing Tasks</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Assigned to:</th>
+      <th>Assigned By:</th>
+      <th>Complete</th>
+      <th>Timespent</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for task <- @tasks do %>
+    <tr>
+      <td><%= task.name %></td>
+      <td><%= task.description %></td>
+      <td><%= task.user.name %></td>
+      <td><%= task.assigns.name %></td>
+      <%= if task.complete do %>
+        <td>Completed!</td>
+      <%= else %> 
+        <td>Incomplete!</td> 
+      <%= end%>  
+      <td><%= task.timespent.hour*60+task.timespent.minute %> Minutes</td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
