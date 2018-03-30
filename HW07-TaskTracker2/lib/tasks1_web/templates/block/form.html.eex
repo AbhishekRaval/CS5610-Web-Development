@@ -1,0 +1,28 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+  <div class="form-group">
+    <%= label f, :starts, class: "control-label" %>
+    <%= datetime_select f, :starts, class: "form-control" %>
+    <span class="error"><%= error_tag f, :starts %><span>
+  </div>
+
+
+  <div class="form-group">
+    <%= hidden_input f, :task_id, class: "form-control", value: @block.task_id %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :ends, class: "control-label" %>
+    <%= datetime_select f, :ends,class: "form-control" %>
+    <span class="error"><%= error_tag f, :ends %><span>
+  </div>
+
+
+  <div class="form-group">
+    <%= submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>

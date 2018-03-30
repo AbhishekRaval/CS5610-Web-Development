@@ -1,0 +1,67 @@
+-> mix phx.new tasks1 //create your application with name 
+-> Install Postgres with sudo apt-get install postgresql postgresql-contrib
+-> Sudo su - postgres
+-> pwgen 12 1 : phai3mais5Th // to create password
+->
+
+
+Kind of data to store :
+ 
+Users :
+	Email : String
+	Name  : String 
+Task:
+	Name    : String
+	Details : String, possibly really long
+	Complete: Boolean
+	Time spent :time 
+	User_id : reference to user !
+  |>Repo.preload(:assigns)
+
+mix phx.gen.html TaskDetails Task tasks user_id:references:users assigns_id:references:users name:string description:text complete:boolean timespent:time 
+
+mix phx.gen.migrate TaskDetails Task tasks add assign_id:reference:user
+
+def create(conn, %{"task" => task_params}) do
+      time = task_params["timespent"]
+      {h,_} = Integer.parse(time["hour"])
+      {m,_} = Integer.parse(time["minute"])
+    case TaskDetails.create_task(task_params) do    
+      {:ok, task} ->
+         if rem(time.hour*60 + time.minute,15) == 0 do
+           conn
+           |> put_flash(:info, "Task created successfully.")
+           |> redirect(to: "/feed")
+        else
+          conn
+           |> put_flash(:info, "Select Time in multiple of 15")
+           |>render("new.html", changeset: changeset)
+        end       
+      {:error, %Ecto.Changeset{} = changeset} ->
+        render(conn, "new.html", changeset: changeset)
+    end
+  end
+
+def addtoteam(conn, %{"id" => id}) do
+  user = Account.get_user!(id)
+  if is_nil(user.manager_id) do
+   user1 = Ecto.Changeset.change user, manager_id: conn.assigns.current_user.id
+   msg = user.name <> " Added to Team successfully."
+  else
+  user1 = Ecto.Changeset.change user, manager_id: nil  
+  msg = user.name <> " Removed from Team successfully."    
+  end
+  case Tasks1.Repo.update user1 do
+      {:ok, struct}       -> # Updated with success
+      users = Account.list_users()
+      conn
+      |> put_flash(:info, msg)
+      |> render("index.html", users: users)
+      {:error, changeset} -> # Something went wrong
+      users = Account.list_users()
+      render(conn, "index.html", users: users)
+    end
+  end
+
+
+mix phx.gen.html TaskDetails Task tasks user_id:references:users assigns_id:references:users name:string description:text complete:boolean timespent:time 

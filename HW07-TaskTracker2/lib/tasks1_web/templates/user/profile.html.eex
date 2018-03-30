@@ -1,0 +1,44 @@
+<h2 class="pb-4"><%=  @current_user.name|>String.capitalize() %>'s Profile </h2>
+
+<h4> <%=  @current_user.name|>String.capitalize() %>'s Managers: </h4>
+<%= if not is_nil(@current_user.manager_id) do %>
+<table class="table pb-3">
+  <thead>
+    <tr>
+      <th>Email</th>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <td> <%= @current_user.manager.name %></td>
+    <td> <%= @current_user.manager.email %></td>
+    
+  </tbody>
+</table>
+ <% else %>
+  <p> You have No Manager. </p>
+ <% end %> 
+
+<%= if @current_user.managerstatus do %>
+<h4 class="pt-4"> <%=  @current_user.name|>String.capitalize() %>'s Underlings: </h4>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Email</th>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for user <- @users do %>
+  <%= if user.manager_id === @current_user.id do %>
+    <tr>
+      <td><%= user.email %></td>
+      <td><%= user.name %></td>   
+    </tr>
+  <% end %>  
+<% end %>
+  </tbody>
+<% end %>
+<span><%= link "Back",  to: "/feed" %></span>

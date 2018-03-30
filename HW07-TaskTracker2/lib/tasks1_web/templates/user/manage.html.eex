@@ -1,0 +1,34 @@
+<h3 class="pb-3">Add to team from below Users :</h3>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Email</th>
+      <th>Name</th>
+      <th>User's Manager</th>
+      <th>Add/Remove From Team</th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for user <- @users do %>
+  <%= if is_nil(user.manager_id) and
+          (is_nil(@current_user.manager_id) or @current_user.manager_id != user.id) and  
+          user.id != @current_user.id  or 
+                user.manager_id === @current_user.id  do %>
+    <tr>
+      <td><%= user.email %></td>
+      <td><%= user.name %></td>
+      <%= if not is_nil(user.manager_id) do %>
+          <td><%= user.manager.name %></td>
+          <td><span><%= link "Remove from Team", to: user_path(@conn,:updatemanager,user) , class:  "btn btn-secondary" %></span></td>
+      <% else %>
+            <td> No Manager</td>
+            <td><span><%= link "Add to Team", to: user_path(@conn,:updatemanager,user), class:  "btn btn-primary" %></span></td>
+      <% end %>      
+    </tr>
+  <% end %>  
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "Back",  to: "/feed" %></span>

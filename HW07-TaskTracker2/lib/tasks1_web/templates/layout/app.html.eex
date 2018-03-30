@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Hello Tasks2</title>
+  <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+</head>
+
+<body>
+  <div class="container" >
+
+     <!-- TODO: style with bootstrap -->
+     <!-- Source: http://www.ccs.neu.edu/home/ntuck/courses/2018/01/cs4550/notes/14-assoc-and-ajax/notes.html -->
+  <div class="row navbar navbar-expand-lg navbar-light bg-light">
+    <%= if @current_user do %>
+      <div class="col-7">
+        <p>
+          <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+          <a href="/feed"  class="nav-link" >Feed</a> 
+          </li>
+          <li class="nav-item"> 
+               <%= link " Profile", to: user_path(@conn, :profile), class: "nav-link" %> </li>
+            <%= if @current_user.managerstatus do %>
+            <li class="nav-item">
+               <%= link " Change-Team", to: user_path(@conn, :addtoteam), class: "nav-link" %> </li>
+            
+            <li class="nav-item">
+               <%= link " Task Reports", to: user_path(@conn, :taskreports), class: "nav-link" %> </li>
+            <% end %>
+          </ul>
+        </p>
+      </div>
+      <div class="col-5">
+        <p>
+          Logged in as: <%= @current_user.name %> |
+          <%= link "LogOut", to: "/session", method: :delete %>
+        </p>
+      </div>
+    <% else %>
+      <div class="col-3 offset-9">
+        <p>Not logged in.</p>
+      </div>
+    <% end %>
+  </div>
+
+         
+    <%= if get_flash(@conn, :info) do %>
+    <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+    <% end %>
+    <%= if get_flash(@conn, :error) do %>
+    <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+    <% end  %>
+
+    <main role="main">
+      <%= render @view_module, @view_template, assigns %>
+    </main>
+  </div> <!-- /container -->
+  <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+</body>
+</html>

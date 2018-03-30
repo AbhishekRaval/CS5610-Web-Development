@@ -1,0 +1,36 @@
+<h3 class="pb-3">All Tasks of Underlings:</h3>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Assigned to:</th>
+      <th>Track Time details</th>
+      <th>Complete</th>
+      <th> Operations </th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for task <- @tasks do %>
+    <tr>
+      <td><%= task.name %></td>
+      <td><%= task.description %></td>
+      <td><%= task.user.name %></td>
+      <td><div> 
+						<%= link "Track All TimeBlocks", to: task_path(@conn, :tracktimeblocks,%{"task_id"=>task.id}), class: "btn btn-info ml-3" %></div></td>
+      <%= if task.complete do %>
+        <td>Completed!</td>
+      <%= else %> 
+        <td>Incomplete!</td> 
+      <%= end%>  
+      <td><span><%= link "Edit Task", to: task_path(@conn, :edit, task) %></span> | 
+      <span> <%= link "Delete Task", to: task_path(@conn, :delete, task), method: :delete, data: [confirm: "Are you sure?"] %></td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "Back",  to: "/feed" %></span>

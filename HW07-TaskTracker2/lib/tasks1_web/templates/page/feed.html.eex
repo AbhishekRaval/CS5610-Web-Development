@@ -1,0 +1,69 @@
+<%= if @current_user do %>
+<div class="container">
+	<script>
+		window.startstopcreate = "<%= block_path(@conn, :create) %>"
+	</script>
+	<h3> <%=  @current_user.name|>String.capitalize() %>'s Dashboard </h3>
+	<h5 class="pt-3">Your Account Details:</h5>
+	<ul>
+		<li><strong>Name: </strong><%=  @current_user.name%></li>
+		<li><strong>Email: </strong><%=  @current_user.email%></li>
+		<li><strong>Manager Status: </strong><%=  @current_user.managerstatus%></li>
+	</ul>
+
+	<%= if @current_user.managerstatus do %>
+	<div class= "pt-2">
+		<span><%= link "New Task", to: task_path(@conn, :new) , class: "btn btn-primary"%></span>
+	</div>
+	<%= end %>
+
+	<%= Enum.map @tasks, fn task -> %>
+	<div class= "row mt-2">
+		<div class="col">
+			<%= if @current_user.email === task.user.email do %>	
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title"> Task: <%= task.name %></h5>					
+					<p>Description: <%= task.description %> </p>
+							
+					<div class="float-left">
+						<p><span>Task Assigned by: <strong><%= task.assigns.name %></strong> </span></p>
+					</div>
+					<div class="float-right">
+						<p><span><%= link "Edit Task Details", to: task_path(@conn, :edit, task) %></span>
+						<span> &nbsp;&nbsp;</span>
+						<%= if @current_user.managerstatus do %>
+						<span> <%= link "Delete Task", to: task_path(@conn, :delete, task), method: :delete, data: [confirm: "Are you sure?"] %></span></p>
+						<%= end %>
+						 </div>
+						 <br>
+
+					
+					<p>
+					<div class="float-left">
+						<%= link "Add New Time Block Manually", to: block_path(@conn, :newblock, task.id) ,method: :get , class: "btn btn-default btn-link ml-3" %>
+					</div>	
+					<div class="float-left"> 
+						<%= link "Track All TimeBlocks", to: task_path(@conn, :tracktimeblocks,%{"task_id"=>task.id}), class: "btn btn-link ml-3" %></div>	
+					<div class="float-right">	
+						<button  class="timeblock-btn btn btn-secondary"
+						data-task-id="<%= task.id %>"
+						data-run-id="notstarted">
+						Start Task		
+					</button>
+				</div></p>	
+			</div>
+		</div>
+		<%= end %>
+	</div>
+</div>
+<% end %>
+<div class="pt-5">
+	<span><%= link "Edit User Details", to: user_path(@conn, :edit,  @current_user), class:  "col-3 offset-0" %></span>
+	<span><%= link "Delete User Details", to: user_path(@conn, :delete, @current_user), method: :delete, data: [confirm: "Are you sure?"], class:  "col-3 offset-6" %></span>
+</div>	
+</div>
+<%= else %>
+<p>Sorry You're logged out of the System, </p>
+<%= link "Login Again", to: "/", class: "btn btn-link" %>	
+<%= end %>

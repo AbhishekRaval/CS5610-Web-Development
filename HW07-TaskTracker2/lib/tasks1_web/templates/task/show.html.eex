@@ -1,0 +1,51 @@
+<script>
+  window.deleteditpath =  "<%= block_path(@conn, :index) %>"
+</script>
+<h2>All Task Details</h2>
+
+<ul>
+ <li>
+  <strong>User:</strong>
+  <%= @task.user.name %>
+</li>
+
+<li>
+  <strong>Name:</strong>
+  <%= @task.name %>
+</li>
+
+<li>
+  <strong>Description:</strong>
+  <%= @task.description %>
+</li>
+
+<li>
+  <strong>Complete:</strong>
+  <%= @task.complete %>
+</li>
+</ul>
+
+<%= link "Add New Time Block", to: block_path(@conn, :newblock, @task.id) ,method: :get , class: "btn btn-default btn-primary mb-3" %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>StartTime</th>
+      <th>EndTime</th>
+      <th>Actions: </th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= for timeblock <- @task.time_tracks do %>
+    <tr>
+      <td><%= NaiveDateTime.to_string(timeblock.starts)|>String.slice(0..-8) %></td>
+      <td><%= NaiveDateTime.to_string(timeblock.ends)|>String.slice(0..-8) #https://hexdocs.pm/elixir/NaiveDateTime.html%></td>
+      <td> <span> <%= link "Edit", to: block_path(@conn, :edit, timeblock.id), method: :get , class: "btn btn-default btn-link" %>
+       <button class="delete-block-btn btn btn-link" data-block-id="<%= timeblock.id %>">Delete Time Block</button></span></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+<span><%= link "Edit  ", to: task_path(@conn, :edit, @task) %></span>
+|
+<span><%= link "Back", to: "/feed" %></span>
