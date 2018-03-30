@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <script>
+      window.userToken = "INSECURE";
+    </script>
+    <meta name="author" content="">
+
+    <title>Hello Memory!</title>
+    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+  </head>
+
+  <body style="background-color: #DCD9D4; 
+ background-image: linear-gradient(to bottom, rgba(255,255,255,0.50) 0%, rgba(0,0,0,0.50) 100%), radial-gradient(at 50% 0%, rgba(255,255,255,0.10) 0%, rgba(0,0,0,0.50) 50%); 
+ background-blend-mode: soft-light,screen;">
+    <div class="container">
+      <section class="h-100">
+        <header class=" h-100">
+          <div class="d-flex align-items-center justify-content-center h-100 py-5">
+            <div class="d-flex flex-column mx-auto">
+
+      <main role="main">
+        <%= render @view_module, @view_template, assigns %>
+      </main>
+
+            </div> <!-- /container -->
+          </div> 
+    </header>
+  </section>
+  </div>
+    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+  </body>
+</html>
+<style>
+html,body{
+  height: 100%;
+  width: 100%;
+}
+.container{
+  height: 100%;
+  width: 100%;
+}
+  
+</style>
